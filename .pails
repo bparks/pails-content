@@ -1,0 +1,5 @@
+{
+	"name": "content",
+	"index": "index.php",
+	"deps": ["activerecord"]
+}
