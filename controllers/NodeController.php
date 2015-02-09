@@ -39,6 +39,7 @@ class NodeController extends \Pails\Controller
 		if ($node->node_body)
 		{
 			$node->node_body->content = $_POST['body'];
+			$node->node_body->save();
 		}
 		else
 		{
