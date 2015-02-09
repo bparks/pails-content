@@ -4,6 +4,10 @@ class NodeController extends \Pails\Controller
 	use PailsAuthentication;
 	use FormBuilder;
 
+	public $before_actions = array(
+		'require_login' => array('only' => array('new', 'create', 'update', 'delete'))
+	);
+
 	function index ()
 	{
 		$this->model = Node::all();
@@ -25,7 +29,7 @@ class NodeController extends \Pails\Controller
 		return 302;
 	}
 
-	function update()
+	function update ()
 	{
 		$node = Node::find($_POST['id']);
 		$node->title = $_POST['title'];
@@ -45,6 +49,16 @@ class NodeController extends \Pails\Controller
 		}
 
 		$this->model = $node->get_url();
+		return 302;
+	}
+
+	function delete ()
+	{
+		$node = Node::find($_POST['id']);
+		$node->node_body->delete();
+		$node->delete();
+
+		$this->model = '/node';
 		return 302;
 	}
 
@@ -70,7 +84,15 @@ class NodeController extends \Pails\Controller
 		{
 			$opts = $arguments[0];
 			if ($opts[0] == 'edit')
+			{
+				$this->require_login();
 				$this->view = 'node/edit';
+			}
+			elseif ($opts[0] == 'delete')
+			{
+				$this->require_login();
+				$this->view = 'node/delete';
+			}
 			else
 				$this->view = 'node/show';
 		}

@@ -9,7 +9,8 @@
 	<h3><a href="<?php echo $node->get_url(); ?>"><?php echo $node->title; ?></a></h3>
 	<div class="actions">
 		<?php if ($this->is_logged_in()): ?>
-		<a href="/node/<?php echo $node->id; ?>/edit">edit</a>
+		<a href="/node/<?php echo $node->id; ?>/edit">edit</a> |
+		<a href="/node/<?php echo $node->id; ?>/delete">delete</a>
 		<?php endif; ?>
 	</div>
 	<div class="body">
