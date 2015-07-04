@@ -18,4 +18,9 @@ function content_config($app)
 		}
 		return false;
 	});
+
+	if (defined('ADMIN_MENU_SLUG'))
+	{
+		Menu::add_static_item(ADMIN_MENU_SLUG, 'Content', '/node');
+	}
 }

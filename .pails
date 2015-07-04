@@ -1,5 +1,0 @@
-{
-	"name": "content",
-	"index": "index.php",
-	"deps": ["activerecord", "auth", "form_builder"]
-}

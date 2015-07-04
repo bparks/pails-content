@@ -1,0 +1,12 @@
+{
+	"name": "pails/content",
+	"autoload": {
+		"files": ["index.php"]
+	},
+	"require": {
+		"pails/pails": "dev-master",
+		"php-activerecord/php-activerecord": "dev-develop",
+		"pails/auth": "dev-master",
+		"pails/form_builder": "dev-master"
+	}
+}

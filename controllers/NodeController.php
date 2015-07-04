@@ -66,6 +66,7 @@ class NodeController extends \Pails\Controller
 	//Handle everything else
 	function __call($name, $arguments) {
 		if ($name == 'new') {
+			$this->require_login();
 			$this->view = 'node/new';
 			return;
 		}
