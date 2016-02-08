@@ -1,4 +1,4 @@
-<script src="/lib/content/ckeditor/ckeditor.js"></script>
+<script src="/ckeditor/ckeditor.js"></script>
 
 <form action="/node/create" method="POST">
 <?php echo $this->input_for('title', 'Title'); ?>

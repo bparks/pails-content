@@ -1,4 +1,4 @@
-<script src="/lib/content/ckeditor/ckeditor.js"></script>
+<script src="/ckeditor/ckeditor.js"></script>
 
 <form action="/node/update" method="POST">
 <?php echo $this->input_for('id', '', array('type' => 'hidden', 'value' => $this->model->id)); ?>

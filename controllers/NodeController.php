@@ -5,7 +5,8 @@ class NodeController extends \Pails\Controller
 	use FormBuilder;
 
 	public $before_actions = array(
-		'require_login' => array('only' => array('new', 'create', 'update', 'delete'))
+		'require_login' => array('only' => array('new', 'create', 'update', 'delete')),
+		'require_permission' => array('only' => array('new', 'create', 'update', 'delete'), 'options' => 'manage-content')
 	);
 
 	function index ()
@@ -79,7 +80,7 @@ class NodeController extends \Pails\Controller
 		if (!($this->model))
 		{
 			$this->view = false;
-			return 404;
+			return $this->notFound();
 		}
 
 		if (count($arguments) > 0)
@@ -88,19 +89,36 @@ class NodeController extends \Pails\Controller
 			if ($opts[0] == 'edit')
 			{
 				$this->require_login();
-				$this->view = 'node/edit';
+				$this->require_permission(['manage-content']);
+				return $this->view('node/edit');
 			}
 			elseif ($opts[0] == 'delete')
 			{
 				$this->require_login();
-				$this->view = 'node/delete';
+				$this->require_permission(['manage-content']);
+				return $this->view('node/delete');
 			}
 			else
-				$this->view = 'node/show';
+				return $this->view('node/show');
 		}
 		else
 		{
-			$this->view = 'node/show';
+			if ($this->model->type != '' && $this->model->type != 'node')
+				return $this->redirect('/'.$this->model->type.'/'.$name);
+
+			if ($this->model->slug != '') {
+				if (substr($this->model->slug, 0, 1) === '/')
+					$expected_url = $this->model->slug;
+				else
+					$expected_url = '/node/'.$this->model->slug;
+
+				$actual_url = parse_url($_SERVER['REQUEST_URI'])['path'];
+
+				if ($expected_url != $actual_url)
+					return $this->redirect($expected_url);
+			}
+
+			return $this->view('node/show');
 		}
 	}
 }
